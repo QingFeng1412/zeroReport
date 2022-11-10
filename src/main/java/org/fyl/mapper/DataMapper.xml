@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="org.fyl.mapper.DataMapper">
+    <resultMap id="datamap" type="data">
+        <id property="gradeAndClass" column="grade_and_class"></id>
+        <id property="date" column="date"></id>
+        <result property="inf" column="inf"></result>
+    </resultMap>
+<!-- List<Data> selectByGrade(String grade);-->
+    <select id="selectByGrade" resultMap="datamap">
+        select * from data where grade_and_class like concat('%',#{grade},'__') and date =#{date}
+    </select>
+<!-- int update(Data data);;-->
+    <update id="update" parameterType="data">
+        update data set inf=#{inf} where grade_and_class=#{gradeAndClass} and date =#{date}
+    </update>
+<!--  int insert(Data data);; -->
+    <insert id="insert" parameterType="data">
+        insert into data (grade_and_class,date,inf)values (#{gradeAndClass},#{date},#{inf})
+    </insert>
+<!--   int selectByKey(String date,String  gradeAndClass); -->
+    <select id="selectByKey" resultMap="datamap">
+        select * from data where grade_and_class =#{gradeAndClass} and date =#{date}
+    </select>
+<!--    List<Data> selectByMonth(
+            @Param("date")
+                    String date,
+            @Param("grade")
+                    String grade
+    );-->
+    <select id="selectByMonth" resultMap="datamap">
+        select * from data where grade_and_class like concat('%',#{grade},'__') and date like concat(#{date},'%')
+    </select>
+</mapper>

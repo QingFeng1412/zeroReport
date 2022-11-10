@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="org.fyl.mapper.StuMapper">
+    <resultMap id="stumap" type="stu">
+        <id property="id" column="id"></id>
+        <result property="gradeAndClass" column="grade_and_class"></result>
+        <result property="name" column="name"></result>
+        <result property="room" column="room"></result>
+    </resultMap>
+<!-- Stu selectByGradeAndClassAndName(
+            @Param("gradeAndClass")
+            String gradeAndClass,
+            @Param("name")
+            String name
+            );-->
+    <select id="selectByGradeAndClassAndName" resultMap="stumap">
+        select * from stu where grade_and_class=#{gradeAndClass} and name=#{name}
+    </select>
+<!--    List<String> matchByGradeAndContent(
+            @Param("gradeAndClass")
+            String gradeAndClass,
+            @Param("content")
+            String content
+            );-->
+    <select id="matchByGradeAndContent" resultType="String">
+        select name from stu where grade_and_class=#{gradeAndClass} and name like concat(#{content},'%')
+    </select>
+
+</mapper>
